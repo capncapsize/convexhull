@@ -10,7 +10,7 @@ function Point(x, y, c, id) {
 		fill(0);
 		stroke(0);
 		textSize(8);
-		text(this.id, this.x + 3, this.y + 9);
+		text(this.id, this.x + 2, this.y + 9);
 	}
 }
 
@@ -64,13 +64,9 @@ function convexHull(Set) {
 		}
 		lower.add(Set.P[i])
 	}
-	//reverse(lower.P)
-	//reverse(upper.P)
 
 	upper.connect('red');
 	lower.connect('red');
-
-	fill(255);
 
 	upper.P.pop();
 	lower.P.pop();

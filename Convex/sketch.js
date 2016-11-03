@@ -8,10 +8,11 @@ function setup() {
 	pSet = new PointSet();
 
 
-//	for (var i = 5; i >= 0; i--) {
-//		pSet.add(new Point(round(random(255)), round(random(255)), 255));
-//	}
-//	pSet.qsort();
+	//for (var i = 5; i >= 0; i--) {
+	//	pSet.add(new Point(random(255), random(255), 255, pointId));
+	//	pointId++;
+	//}
+	//pSet.qsort();
 }
 
 function draw() {
@@ -23,10 +24,11 @@ function draw() {
 }
 
 function mouseReleased(){
-  	pSet.add(new Point(mouseX - padding, mouseY - padding, 255, pointId));
-  	pSet.qsort();
-
-  	pointId = pointId + 1;
+	if(mouseX < width && mouseY < height){
+  		pSet.add(new Point(mouseX - padding, mouseY - padding, 255, pointId));
+  		pSet.qsort();
+		pointId++;
+	}
   }
 
 
@@ -37,6 +39,7 @@ function expressPoint(P){
 		s = s + "(P" + P[i].id + ") "
 	}
 
+	fill(255);
 	textSize(10);
 	text(s, 10, 30);
 	fill(0, 102, 153);
