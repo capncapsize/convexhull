@@ -1,4 +1,5 @@
-function Point(x, y, c) {
+function Point(x, y, c, id) {
+	this.id = id
 	this.x = x + padding;
 	this.y = y + padding;
 	this.c = c;
@@ -6,6 +7,10 @@ function Point(x, y, c) {
 	this.show = function() {
 		fill(this.c);
 		rect(this.x, this.y, 10, 10);
+		fill(0);
+		stroke(0);
+		textSize(8);
+		text(this.id, this.x + 3, this.y + 9);
 	}
 }
 
@@ -21,10 +26,10 @@ function PointSet(){
 	}
 
 	this.show = function(){
+		this.connect(255);
 		for (var i = this.P.length - 1; i >= 0; i--) {
     		this.P[i].show();
   		}
-  		this.connect(255);
 	}
 
 	this.connect = function(c){
@@ -66,6 +71,11 @@ function convexHull(Set) {
 	lower.connect('red');
 
 	fill(255);
+
+	upper.P.pop();
+	lower.P.pop();
+
+	return concat(upper.P, lower.P);
 
 }
 
