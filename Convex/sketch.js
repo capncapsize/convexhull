@@ -2,7 +2,10 @@ var pSet;
 var lines;
 var txt;
 var P = [];
-var padding = 20;
+var padding = 23;
+var scl = 10;
+var originX; 
+var originY;
 
 var pointId = 0;
 
@@ -15,30 +18,35 @@ var computeHullButton;
 var loadPointsButton;
 var input;
 
+var xPix = 550 + padding*2;
+var yPix = 550 + padding*2;
+
 function setup() {
-	createCanvas(255 + padding*2,255 + padding*2);
+	createCanvas(xPix,yPix);
+	originX = round((xPix - padding*2 - 200)/2);
+	originY = originX;
+
 	pSet = new PointSet();
 
 	var fileSelect = createFileInput(gotFile);
-	fileSelect.position(220, 280+padding)
+	fileSelect.position(220, xPix+padding)
 	print(lines);
 
 	randomPointsButton = createButton('Random');
-	randomPointsButton.position(0, 280+padding);
+	randomPointsButton.position(0, xPix+padding);
 	randomPointsButton.mousePressed(randomGenPointSet);
 
 	computeHullButton = createButton('Compute');
-	computeHullButton.position(80, 280+padding);
+	computeHullButton.position(80, xPix+padding);
 	computeHullButton.mousePressed(computeHull);
 
 	loadPointsButton = createButton('Load');
-	loadPointsButton.position(160, 280+padding)
+	loadPointsButton.position(160, xPix+padding)
 	loadPointsButton.mousePressed(loadPoints);
 
 	mouseInputButton = createButton('ToggleMouseInput');
-	mouseInputButton.position(0, 340 + padding);
+	mouseInputButton.position(0, xPix+padding + 50);
 	mouseInputButton.mousePressed(toggleMouseInput);
-  	
 }
 
 function draw() {
@@ -53,7 +61,8 @@ function draw() {
 
 function mouseReleased(){
 	if(mouseX < width-padding && mouseY < height-padding && mouseActive){
-  		pSet.add(new Point(mouseX - padding, mouseY - padding, 255, pointId));
+		print(round((mouseX - padding)/scl));
+  		pSet.add(new Point((mouseX - padding - originX)/scl, (mouseY - padding - originY)/scl, 255, pointId));
 		pointId = pointId + 1;
 		updateCan = true;
 	}
@@ -61,13 +70,6 @@ function mouseReleased(){
 
 
 function expressPoint(P){
-
-	for (var i = P.length - 1; i >= 0; i--) {
-		P[i].c = 100;
-		P[i].o = 100;
-		P[i].show();
-	}
-
 	var s = "Hull: ";
 	fill(255);
 	stroke(0);
@@ -85,7 +87,7 @@ function randomGenPointSet(){
 	pSet.P = [];
 	pointId = 0;
 	for (var i = round(random(5,15)); i >= 0; i--) {
-		pSet.add(new Point(round(random(255-padding)), round(random(255-padding)), 255, pointId));
+		pSet.add(new Point(round(random(20)), round(random(20)), 255, pointId));
 		pointId = pointId + 1;
 	}
 	updateCan = true;
@@ -104,7 +106,6 @@ function gotFile(file){
     	txt[i] = txt[i].split(' ');
 	}
 	print(txt);
-
 }
 
 function loadPoints(){
@@ -112,7 +113,7 @@ function loadPoints(){
 		pSet.P = [];
 		pointId = 0;
 		for (var i = txt.length - 1; i >= 0; i--) {
-    		pSet.add(new Point(int(txt[i][0]) + padding, int(txt[i][1]) + padding, 255, pointId));
+    		pSet.add(new Point(float(txt[i][0]), float(txt[i][1]), 255, pointId));
     		pointId = pointId + 1;
 		}
 		updateCan = true;

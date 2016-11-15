@@ -1,17 +1,17 @@
 function Point(x, y, c, id) {
 	this.id = id
-	this.x = x + padding;
-	this.y = y + padding;
+	this.x = round(x + padding/scl + originX/scl);
+	this.y = round(y + padding/scl + originY/scl);
 	this.c = c;
 	this.o = 255;
 
 	this.show = function() {
 		stroke(0);
 		fill(this.c, this.o);
-		rect(this.x, this.y, 10, 10);
+		rect(this.x*scl, this.y*scl, 10, 10);
 		fill(0);
 		textSize(8);
-		text(this.id, this.x + 2, this.y + 9);
+		text(this.id, this.x*scl + 2, this.y*scl + 9);
 	}
 }
 
@@ -43,7 +43,7 @@ function PointSet(){
 	this.connect = function(c){
 		stroke(c);
 		for(var i = this.P.length - 2; i>=0;i--){
-			line(this.P[i].x, this.P[i].y, this.P[i+1].x, this.P[i+1].y);
+			line(this.P[i].x*scl, this.P[i].y*scl, this.P[i+1].x*scl, this.P[i+1].y*scl);
 		}
 	}
 
