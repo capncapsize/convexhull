@@ -8,10 +8,12 @@ function Point(x, y, c, id) {
 	this.show = function() {
 		stroke(0);
 		fill(this.c, this.o);
+		rect(this.x*scl, this.y*scl, 10, 10);
+		fill(0);
 		rect(this.x*scl, this.y*scl, 1, 1);
 		fill(0);
 		textSize(8);
-		//text(this.id, this.x*scl + 2, this.y*scl + 9);
+		text(this.id, this.x*scl + 2, this.y*scl + 9);
 	}
 }
 
