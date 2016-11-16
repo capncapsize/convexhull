@@ -8,10 +8,10 @@ function Point(x, y, c, id) {
 	this.show = function() {
 		stroke(0);
 		fill(this.c, this.o);
-		rect(this.x*scl, this.y*scl, 10, 10);
+		rect(this.x*scl, this.y*scl, 1, 1);
 		fill(0);
 		textSize(8);
-		text(this.id, this.x*scl + 2, this.y*scl + 9);
+		//text(this.id, this.x*scl + 2, this.y*scl + 9);
 	}
 }
 
@@ -24,11 +24,24 @@ function PointSet(){
 	}
 
 	this.qsort = function(sortAfter){
+		var tmp = [];
+
+		for (var i = 0; i < this.P.length; i++) {
+			append(tmp, this.P[i]);
+		}
 		repeatedSort = false;
 		if(sortAfter == 'x'){
 			this.P.sort(this.compareToX);
+			print("Compare X");
+			if(repeatedSort == true){
+				//this.P = tmp;
+			}
 		}else{
 			this.P.sort(this.compareToY);
+			print("Compare Y");
+			if(repeatedSort == true){
+				this.P = tmp;
+			}
 		}
 		return repeatedSort;
 	}
@@ -48,15 +61,17 @@ function PointSet(){
 	}
 
 	this.compareToY = function(a, b){
-		if(a.y === b.y){
+		if(a.y == b.y){
 			repeatedSort = true;
+			print("Y failed");
 		}
 		return a.y - b.y;
 	}	
 
 		this.compareToX = function(a, b){
-		if(a.x === b.x){
+		if(a.x == b.x){
 			repeatedSort = true;
+			print("X failed");
 		}
 		return a.x - b.x;
 	}
@@ -64,8 +79,8 @@ function PointSet(){
 
 function convexHull(Set) {
 
-	if(Set.qsort('x')){
-		Set.qsort('y');
+	if(Set.qsort('y')){
+		Set.qsort('x');
 	}
 
 	var lower = new PointSet();
